@@ -1,15 +1,12 @@
-<?php
-    $base = Flight::get('flight.base_url')
-?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $title ?? 'BNGRC - Gestion des Dons'; ?></title>
-    <link href="<?= $base ?>/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <title><?= $title ?? 'BNGRC - Gestion des Dons' ?></title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="<?= $base ?>/css/style.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -48,7 +45,7 @@
     </nav>
 
     <div class="container-fluid mt-4">
-        <?php echo $content; ?>
+        <?= $body() ?>
     </div>
 
     <footer class="footer mt-5 py-3 bg-light">
@@ -57,7 +54,7 @@
         </div>
     </footer>
 
-    <script src="<?= $base ?>/css/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="<?= $base ?>/css/bootstrap/js/app.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/app.js"></script>
 </body>
 </html>

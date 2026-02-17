@@ -5,7 +5,15 @@
                 <h1 class="mb-1"><i class="bi bi-speedometer2 text-primary"></i> Tableau de bord BNGRC</h1>
                 <p class="text-muted mb-0">Gestion des dons et besoins - Bureau National de Gestion des Risques et Catastrophes</p>
             </div>
-            <div class="d-flex gap-2">
+            <div class="d-flex gap-2 align-items-center">
+                <div class="me-3">
+                    <label for="dispatchMode" class="form-label mb-0 fw-bold">Mode de distribution:</label>
+                    <select id="dispatchMode" class="form-select form-select-sm">
+                        <option value="date">Par défaut (par date)</option>
+                        <option value="quantite">Par demandes les plus petits</option>
+                        <option value="proportionnel">Proportionnel aux besoins</option>
+                    </select>
+                </div>
                 <button class="btn btn-outline-primary" onclick="actualiserStats()">
                     <i class="bi bi-arrow-clockwise"></i> Actualiser
                 </button>
@@ -294,30 +302,7 @@
 
 <?php } ?>
 
-<script>
-function executerDispatch() {
-    if (!confirm('Voulez-vous vraiment exécuter le dispatch des dons ?')) {
-        return;
-    }
-    
-    fetch('/distributions/dispatch', {
-        method: 'POST'
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert(data.message);
-            location.reload();
-        } else {
-            alert('Erreur: ' + data.message);
-        }
-    })
-    .catch(error => {
-        alert('Erreur de connexion');
-        console.error(error);
-    });
-}
-</script>
+<script src="/js/dashboard.js"></script>
 
 <!-- Modal de réinitialisation -->
 <div class="modal fade" id="resetModal" tabindex="-1">
@@ -355,36 +340,4 @@ function executerDispatch() {
     </div>
 </div>
 
-<script>
-document.getElementById('confirmResetBtn').addEventListener('click', function() {
-    // Désactiver le bouton pendant le traitement
-    this.disabled = true;
-    this.innerHTML = '<i class="bi bi-hourglass-split"></i> Réinitialisation...';
-    
-    fetch('/reset-data', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('✅ ' + data.message);
-            location.reload();
-        } else {
-            alert('❌ Erreur: ' + data.message);
-            // Réactiver le bouton en cas d'erreur
-            document.getElementById('confirmResetBtn').disabled = false;
-            document.getElementById('confirmResetBtn').innerHTML = '<i class="bi bi-arrow-counterclockwise"></i> Confirmer la réinitialisation';
-        }
-    })
-    .catch(error => {
-        alert('❌ Erreur de connexion lors de la réinitialisation');
-        console.error(error);
-        // Réactiver le bouton en cas d'erreur
-        document.getElementById('confirmResetBtn').disabled = false;
-        document.getElementById('confirmResetBtn').innerHTML = '<i class="bi bi-arrow-counterclockwise"></i> Confirmer la réinitialisation';
-    });
-});
-</script>
+<script src="/js/dashboard.js"></script>

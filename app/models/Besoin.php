@@ -104,7 +104,9 @@ class Besoin {
         return $stmt->execute([$id]);
     }
     
-    public function getBesoinsNonSatisfaits() {
+    public function getBesoinsNonSatisfaits($orderBy = 'date') {
+        $orderClause = $orderBy === 'quantite' ? 'b.quantite ASC' : 'b.date_saisie ASC';
+        
         $query = "
             SELECT 
                 b.*,
@@ -118,7 +120,7 @@ class Besoin {
             JOIN villes v ON b.ville_id = v.id
             JOIN types_besoins tb ON b.type_besoin_id = tb.id
             WHERE b.statut != 'satisfait'
-            ORDER BY b.date_saisie ASC
+            ORDER BY $orderClause
         ";
         $stmt = $this->db->query($query);
         return $stmt->fetchAll();

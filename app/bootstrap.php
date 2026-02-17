@@ -11,8 +11,11 @@ use App\Controllers\DistributionController;
 
 // Configuration de Flight
 Flight::set('flight.views.path', __DIR__ . '/views');
-Flight::set('flight.base_url', $config['app']['base_url']);
 
+// Détection automatique de base_url (plus flexible pour dev)
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+$host = $_SERVER['HTTP_HOST'] ?? 'localhost:8000';
+Flight::set('flight.base_url', $protocol . '://' . $host);
 // Helper URL
 function url($path = '') {
     $baseUrl = Flight::get('flight.base_url');

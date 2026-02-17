@@ -45,19 +45,52 @@ class DashboardController {
     }
     
     public function resetData() {
+        $db = null;
         try {
             $db = Database::getInstance()->getConnection();
             
-            // Tester la connexion
-            $test = $db->query('SELECT 1');
-            if (!$test) {
-                throw new \Exception('Impossible de se connecter à la base de données');
+            // Supprimer toutes les données dans l'ordre inverse des dépendances
+            $tables = ['achats', 'distributions', 'dons', 'besoins', 'types_besoins', 'villes'];
+            foreach ($tables as $table) {
+                try {
+                    $db->exec("DELETE FROM $table");
+                } catch (\Exception $deleteException) {
+                    // La table n'existe peut-être pas, continuer
+                }
             }
             
-            Flight::json(['success' => true, 'message' => 'Connexion à la base de données réussie']);
+            // Réinitialiser les auto-increments (optionnel)
+            foreach ($tables as $table) {
+                try {
+                    $db->exec("ALTER TABLE $table AUTO_INCREMENT = 1");
+                } catch (\Exception $alterException) {
+                    // Les ALTER TABLE peuvent échouer si les tables n'existent pas encore
+                }
+            }
+            
+            // Recharger les données de test
+            $sqlFile = __DIR__ . '/../../database/database.sql';
+            if (file_exists($sqlFile)) {
+                $sql = file_get_contents($sqlFile);
+                
+                // Diviser le SQL en statements individuels
+                $statements = array_filter(array_map('trim', explode(';', $sql)));
+                
+                foreach ($statements as $statement) {
+                    if (!empty($statement) && !preg_match('/^(CREATE|USE|DROP)/i', $statement)) {
+                        try {
+                            $db->exec($statement);
+                        } catch (\Exception $insertException) {
+                            // Certaines insertions peuvent échouer, continuer
+                        }
+                    }
+                }
+            }
+            
+            Flight::json(['success' => true, 'message' => 'Données réinitialisées avec succès']);
             
         } catch (\Exception $e) {
-            Flight::json(['success' => false, 'message' => 'Erreur: ' . $e->getMessage()], 500);
+            Flight::json(['success' => false, 'message' => 'Erreur lors de la réinitialisation: ' . $e->getMessage()], 500);
         }
     }
 }

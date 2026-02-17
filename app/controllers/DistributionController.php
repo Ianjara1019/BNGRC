@@ -18,8 +18,10 @@ class DistributionController {
     }
     
     public function executerDispatch() {
+        $mode = Flight::request()->data->mode ?? 'date'; // 'date' ou 'quantite'
+        
         $distributionModel = new Distribution();
-        $result = $distributionModel->executerDispatch();
+        $result = $distributionModel->executerDispatch($mode);
         
         if ($result['success']) {
             Flight::json([

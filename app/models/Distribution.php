@@ -59,14 +59,14 @@ class Distribution {
         return $stmt->fetchAll();
     }
     
-    public function executerDispatch() {
+    public function executerDispatch($mode = 'date') {
         try {
             $this->db->beginTransaction();
             
             $besoinModel = new Besoin();
             $donModel = new Don();
             
-            $besoins = $besoinModel->getBesoinsNonSatisfaits();
+            $besoins = $besoinModel->getBesoinsNonSatisfaits($mode);
             $dons = $donModel->getDonsDisponibles();
             
             $distributionsEffectuees = 0;

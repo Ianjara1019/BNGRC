@@ -84,4 +84,21 @@ class Don {
         $stmt = $this->db->query($query);
         return $stmt->fetchAll();
     }
+    
+    public function getDonsArgentDisponibles() {
+        $query = "
+            SELECT 
+                d.*,
+                tb.nom as type_nom,
+                tb.categorie,
+                tb.unite,
+                tb.prix_unitaire
+            FROM dons d
+            JOIN types_besoins tb ON d.type_besoin_id = tb.id
+            WHERE d.quantite_restante > 0 AND tb.categorie = 'argent'
+            ORDER BY d.date_don ASC
+        ";
+        $stmt = $this->db->query($query);
+        return $stmt->fetchAll();
+    }
 }

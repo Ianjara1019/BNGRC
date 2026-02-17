@@ -81,6 +81,7 @@ class Distribution {
                         $this->create($don['id'], $besoin['id'], $quantiteADistribuer);
                         
                         $besoinModel->updateQuantiteRecue($besoin['id'], $quantiteADistribuer);
+                        $besoinModel->recalculerStatut($besoin['id']);
                         $donModel->updateQuantiteRestante($don['id'], $quantiteADistribuer);
                         
                         $don['quantite_restante'] -= $quantiteADistribuer;

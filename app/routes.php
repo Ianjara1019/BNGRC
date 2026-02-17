@@ -76,7 +76,7 @@ Flight::route('GET /achats/recapitulatif', function() {
     $controller->recapitulatifPage();
 });
 
-Flight::route('GET /api/recapitulatif', function() {
-    $controller = new AchatController();
-    $controller->recapitulatif();
+Flight::route('POST /reset-data', function() {
+    $controller = new DashboardController();
+    $controller->resetData();
 });

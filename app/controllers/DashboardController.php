@@ -6,6 +6,7 @@ use App\Models\Ville;
 use App\Models\Besoin;
 use App\Models\Don;
 use App\Models\Distribution;
+use App\Models\Database;
 use Flight;
 
 class DashboardController {
@@ -41,5 +42,22 @@ class DashboardController {
             'stats' => $stats,
             'title' => 'Tableau de bord'
         ]);
+    }
+    
+    public function resetData() {
+        try {
+            $db = Database::getInstance()->getConnection();
+            
+            // Tester la connexion
+            $test = $db->query('SELECT 1');
+            if (!$test) {
+                throw new \Exception('Impossible de se connecter à la base de données');
+            }
+            
+            Flight::json(['success' => true, 'message' => 'Connexion à la base de données réussie']);
+            
+        } catch (\Exception $e) {
+            Flight::json(['success' => false, 'message' => 'Erreur: ' . $e->getMessage()], 500);
+        }
     }
 }

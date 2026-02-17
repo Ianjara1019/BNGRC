@@ -1,53 +1,251 @@
-/* Styles de base pour le tableau de bord */
+/* Styles modernes pour BNGRC */
+
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    --warning-gradient: linear-gradient(135deg, #fcb045 0%, #fd1d1d 100%);
+    --info-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --shadow-light: 0 2px 10px rgba(0,0,0,0.1);
+    --shadow-medium: 0 4px 20px rgba(0,0,0,0.15);
+    --border-radius: 12px;
+    --transition: all 0.3s ease;
+}
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
 }
 
-header {
-    background-color: #333;
-    color: white;
-    padding: 1rem;
-    text-align: center;
+/* Navigation améliorée */
+.navbar {
+    background: var(--primary-gradient) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-medium);
+    border: none;
 }
 
-nav ul {
-    list-style: none;
-    padding: 0;
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
 }
 
-nav ul li {
-    display: inline;
-    margin: 0 1rem;
+/* Cartes modernes */
+.card {
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+    transition: var(--transition);
+    overflow: hidden;
 }
 
-nav a {
-    color: white;
-    text-decoration: none;
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
 }
 
-main {
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
+.card-header {
+    border: none;
+    font-weight: 600;
 }
 
-section {
-    margin-bottom: 2rem;
+/* Dégradés personnalisés */
+.bg-gradient-primary {
+    background: var(--primary-gradient) !important;
 }
 
-.actions {
-    display: flex;
-    gap: 1rem;
+.bg-gradient-success {
+    background: var(--success-gradient) !important;
 }
 
-.button {
+.bg-gradient-warning {
+    background: var(--warning-gradient) !important;
+}
+
+.bg-gradient-info {
+    background: var(--info-gradient) !important;
+}
+
+/* Timeline pour les distributions */
+.timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #667eea, #764ba2);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -22px;
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px #667eea;
+}
+
+.timeline-content {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-light);
+}
+
+/* Boutons améliorés */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: var(--transition);
+    border: none;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Tableaux améliorés */
+.table {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.table thead th {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: none;
+    font-weight: 600;
+    color: #495057;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(0,123,255,0.05);
+}
+
+/* Badges améliorés */
+.badge {
+    border-radius: 20px;
+    font-weight: 500;
+    padding: 6px 12px;
+}
+
+/* Formulaires améliorés */
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    transition: var(--transition);
+    padding: 12px 16px;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+/* Alertes améliorées */
+.alert {
+    border-radius: var(--border-radius);
+    border: none;
+}
+
+/* Indicateurs de statut */
+.status-indicator {
     display: inline-block;
-    padding: 0.5rem 1rem;
-    background-color: #007bff;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.status-success { background-color: #28a745; }
+.status-warning { background-color: #ffc107; }
+.status-danger { background-color: #dc3545; }
+.status-info { background-color: #17a2b8; }
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .timeline {
+        padding-left: 20px;
+    }
+
+    .timeline-marker {
+        left: -15px;
+        width: 10px;
+        height: 10px;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+/* Styles pour les statistiques */
+.stats-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    text-align: center;
+    transition: var(--transition);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.stats-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.5rem;
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
     color: white;
     text-decoration: none;
     border-radius: 4px;

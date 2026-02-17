@@ -53,7 +53,7 @@
                 <?php } ?>
 
                 <div class="mt-3">
-                    <a href="/" class="btn btn-secondary">
+                    <a href="<?= Flight::get('flight.base_url')?>" class="btn btn-secondary">
                         <i class="bi bi-arrow-left"></i> Retour au tableau de bord
                     </a>
                 </div>

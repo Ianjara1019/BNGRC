@@ -1,8 +1,8 @@
 <?php
 
-// Bootstrap de l'application BNGRC - Gestion des Dons
-
 require __DIR__ . '/../vendor/autoload.php';
+
+$config = require __DIR__ . '/../config/config.php';
 
 use App\Controllers\DashboardController;
 use App\Controllers\BesoinController;
@@ -11,22 +11,27 @@ use App\Controllers\DistributionController;
 
 // Configuration de Flight
 Flight::set('flight.views.path', __DIR__ . '/views');
+Flight::set('flight.base_url', $config['app']['base_url']);
 
-// Configuration du layout personnalisé
+// Helper URL
+function url($path = '') {
+    $baseUrl = Flight::get('flight.base_url');
+    return $baseUrl . '/' . ltrim($path, '/');
+}
+
+// Render avec layout
 Flight::map('render', function($template, $data = []) {
     extract($data);
+
     ob_start();
     include __DIR__ . '/views/' . $template . '.php';
     $content = ob_get_clean();
 
-    Flight::view()->set('body', function() use ($content) {
-        return $content;
-    });
+    $layoutData = [
+        'body' => $content,
+        'title' => $data['title'] ?? 'BNGRC - Gestion des Dons'
+    ];
+    extract($layoutData);
 
-    Flight::view()->set('title', $data['title'] ?? 'BNGRC - Gestion des Dons');
-
-    $body = Flight::view()->get('body');
-    $title = Flight::view()->get('title');
-    extract(['body' => $body, 'title' => $title]);
     include __DIR__ . '/views/layout.php';
 });

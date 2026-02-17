@@ -52,6 +52,18 @@ CREATE TABLE distributions (
     FOREIGN KEY (besoin_id) REFERENCES besoins(id) ON DELETE CASCADE
 );
 
+CREATE TABLE achats (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    besoin_id INT NOT NULL,
+    don_argent_id INT NOT NULL,
+    quantite DECIMAL(10, 2) NOT NULL,
+    frais_percent DECIMAL(5, 2) NOT NULL,
+    statut ENUM('simulation', 'valide') DEFAULT 'simulation',
+    date_achat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (besoin_id) REFERENCES besoins(id) ON DELETE CASCADE,
+    FOREIGN KEY (don_argent_id) REFERENCES dons(id) ON DELETE CASCADE
+);
+
 INSERT INTO villes (nom, region) VALUES
 ('Antananarivo', 'Analamanga'),
 ('Toamasina', 'Atsinanana'),

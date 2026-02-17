@@ -10,7 +10,8 @@ return [
     ],
     'app' => [
         'name' => 'BNGRC - Gestion des Dons',
-        'base_url' => 'http://localhost:8000',
-        'timezone' => 'Indian/Antananarivo'
+        'base_url' => 'http://localhost:8083',
+        'timezone' => 'Indian/Antananarivo',
+        'frais_achat_percent' => 10 // Frais d'achat en pourcentage
     ]
 ];

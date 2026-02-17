@@ -1,20 +1,18 @@
-<?php
-    $base = Flight::get('flight.base_url')
-?>
+<?php $baseUrl = Flight::get('flight.base_url');?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $title ?? 'BNGRC - Gestion des Dons'; ?></title>
-    <link href="<?= $base ?>/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <title><?= $title ?? 'BNGRC - Gestion des Dons' ?></title>
+    <link href="<?= $baseUrl?>/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="<?= $base ?>/css/style.css" rel="stylesheet">
+    <link href="<?= $baseUrl?>/css/style.css" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="<?= $baseUrl?>">
                 <i class="bi bi-heart-fill"></i> BNGRC - Gestion des Dons
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -23,23 +21,38 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">
+                        <a class="nav-link" href="<?= $baseUrl?>">
                             <i class="bi bi-speedometer2"></i> Tableau de bord
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/besoins/create">
+                        <a class="nav-link" href="<?= $baseUrl?>/besoins/create">
                             <i class="bi bi-exclamation-circle"></i> Saisir un besoin
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/dons/create">
+                        <a class="nav-link" href="<?= $baseUrl?>/dons/create">
                             <i class="bi bi-gift"></i> Enregistrer un don
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/distributions">
+                        <a class="nav-link" href="<?= $baseUrl?>/achats/simulation">
+                            <i class="bi bi-cart-plus"></i> Achats
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= $baseUrl?>/achats">
+                            <i class="bi bi-receipt"></i> Historique achats
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= $baseUrl?>/distributions">
                             <i class="bi bi-truck"></i> Distributions
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= $baseUrl?>/achats/recapitulatif">
+                            <i class="bi bi-bar-chart"></i> Récapitulatif
                         </a>
                     </li>
                 </ul>
@@ -48,7 +61,7 @@
     </nav>
 
     <div class="container-fluid mt-4">
-        <?php echo $content; ?>
+        <?= $body ?>
     </div>
 
     <footer class="footer mt-5 py-3 bg-light">
@@ -57,7 +70,7 @@
         </div>
     </footer>
 
-    <script src="<?= $base ?>/css/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="<?= $base ?>/css/bootstrap/js/app.js"></script>
+    <script src="<?= $baseUrl?>/css/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= $baseUrl?>/js/script.js"></script>
 </body>
 </html>

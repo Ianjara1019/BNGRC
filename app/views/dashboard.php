@@ -11,6 +11,7 @@
                     <select id="dispatchMode" class="form-select form-select-sm">
                         <option value="date">Par défaut (par date)</option>
                         <option value="quantite">Par demandes les plus petits</option>
+                        <option value="proportionnel">Proportionnel aux besoins</option>
                     </select>
                 </div>
                 <button class="btn btn-outline-primary" onclick="actualiserStats()">

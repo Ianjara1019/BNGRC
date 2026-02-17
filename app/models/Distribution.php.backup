@@ -116,6 +116,7 @@ class Distribution {
             $besoinModel = new Besoin();
             $donModel = new Don();
             
+            // Grouper les besoins par type
             $besoinsParType = [];
             $besoins = $besoinModel->getBesoinsNonSatisfaits('date');
             
@@ -129,6 +130,7 @@ class Distribution {
             
             $distributionsEffectuees = 0;
             
+            // Pour chaque type de besoin
             foreach ($besoinsParType as $typeId => $besoinsType) {
                 $donsDisponibles = $donModel->getDonsDisponiblesParType($typeId);
                 
@@ -136,6 +138,7 @@ class Distribution {
                     continue;
                 }
                 
+                // Calculer le total des dons disponibles pour ce type
                 $totalDonsDisponibles = 0;
                 foreach ($donsDisponibles as $don) {
                     $totalDonsDisponibles += $don['quantite_restante'];
@@ -145,11 +148,13 @@ class Distribution {
                     continue;
                 }
                 
+                // Calculer le total des besoins pour ce type
                 $totalBesoins = 0;
                 foreach ($besoinsType as $besoin) {
                     $totalBesoins += $besoin['quantite_manquante'];
                 }
                 
+                // Calculer les proportions
                 $allocations = [];
                 $totalAlloue = 0;
                 $decimales = [];
@@ -159,40 +164,34 @@ class Distribution {
                     $partieEntiere = floor($proportion);
                     $decimale = $proportion - $partieEntiere;
                     
-                    $quantiteAllouee = min($partieEntiere, $besoin['quantite_manquante']);
-                    
                     $allocations[] = [
                         'besoin' => $besoin,
-                        'quantite_allouee' => $quantiteAllouee,
-                        'quantite_max' => $besoin['quantite_manquante'],
+                        'quantite_allouee' => $partieEntiere,
                         'decimale' => $decimale
                     ];
                     
-                    $totalAlloue += $quantiteAllouee;
+                    $totalAlloue += $partieEntiere;
                     $decimales[] = $decimale;
                 }
                 
+                // Gérer les restes : donner la priorité aux décimales les plus élevées
                 $reste = $totalDonsDisponibles - $totalAlloue;
                 if ($reste > 0) {
+                    // Trier par décimale décroissante
                     usort($allocations, function($a, $b) {
                         return $b['decimale'] <=> $a['decimale'];
                     });
                     
                     for ($i = 0; $i < $reste && $i < count($allocations); $i++) {
-                        if ($allocations[$i]['quantite_allouee'] < $allocations[$i]['quantite_max']) {
-                            $allocations[$i]['quantite_allouee']++;
-                        }
+                        $allocations[$i]['quantite_allouee']++;
                     }
                 }
                 
+                // Distribuer selon les allocations calculées
                 $donsIndex = 0;
                 foreach ($allocations as $allocation) {
-                    $quantiteRestante = min($allocation['quantite_allouee'], $allocation['quantite_max']);
+                    $quantiteRestante = $allocation['quantite_allouee'];
                     $besoin = $allocation['besoin'];
-                    
-                    if ($quantiteRestante <= 0) {
-                        continue;
-                    }
                     
                     while ($quantiteRestante > 0 && $donsIndex < count($donsDisponibles)) {
                         $don = &$donsDisponibles[$donsIndex];
@@ -226,4 +225,3 @@ class Distribution {
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
-}

@@ -174,7 +174,7 @@ class Achat {
             SELECT
                 SUM(b.quantite * tb.prix_unitaire) as besoins_totaux,
                 SUM(b.quantite_recue * tb.prix_unitaire) as besoins_satisfaits,
-                SUM((b.quantite - b.quantite_recue) * tb.prix_unitaire) as besoins_restants
+                SUM(CASE WHEN (b.quantite - b.quantite_recue) > 0 THEN (b.quantite - b.quantite_recue) ELSE 0 END * tb.prix_unitaire) as besoins_restants
             FROM besoins b
             JOIN types_besoins tb ON b.type_besoin_id = tb.id
         ";

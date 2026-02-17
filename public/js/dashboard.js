@@ -1,6 +1,8 @@
 function executerDispatch() {
     const mode = document.getElementById('dispatchMode').value;
-    const modeText = mode === 'date' ? 'par défaut (par date)' : 'par demandes les plus petits';
+    const modeText = mode === 'date' ? 'par défaut (par date)' : 
+                    mode === 'quantite' ? 'par demandes les plus petits' : 
+                    'proportionnel aux besoins';
     
     if (!confirm(`Voulez-vous vraiment exécuter le dispatch des dons en mode "${modeText}" ?`)) {
         return;

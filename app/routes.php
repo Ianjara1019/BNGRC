@@ -4,6 +4,7 @@ use App\Controllers\DashboardController;
 use App\Controllers\BesoinController;
 use App\Controllers\DonController;
 use App\Controllers\DistributionController;
+use App\Controllers\AchatController;
 
 Flight::route('/', function() {
     $controller = new DashboardController();
@@ -43,4 +44,39 @@ Flight::route('GET /distributions', function() {
 Flight::route('POST /distributions/dispatch', function() {
     $controller = new DistributionController();
     $controller->executerDispatch();
+});
+
+Flight::route('GET /achats', function() {
+    $controller = new AchatController();
+    $controller->index();
+});
+
+Flight::route('GET /achats/simulation', function() {
+    $controller = new AchatController();
+    $controller->simulation();
+});
+
+Flight::route('POST /achats', function() {
+    $controller = new AchatController();
+    $controller->store();
+});
+
+Flight::route('POST /achats/valider', function() {
+    $controller = new AchatController();
+    $controller->valider();
+});
+
+Flight::route('DELETE /achats/simulation', function() {
+    $controller = new AchatController();
+    $controller->supprimerSimulation();
+});
+
+Flight::route('GET /achats/recapitulatif', function() {
+    $controller = new AchatController();
+    $controller->recapitulatifPage();
+});
+
+Flight::route('GET /api/recapitulatif', function() {
+    $controller = new AchatController();
+    $controller->recapitulatif();
 });
